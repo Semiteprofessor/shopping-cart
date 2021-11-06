@@ -22,6 +22,7 @@ body{
 
 .menu-avatar-name {
     font-size: 17px;
+    font-weight: bold;
 }
 
 .ant-avatar {

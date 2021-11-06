@@ -10,6 +10,7 @@ const Container = styled.div`
 const Wrapper = styled.div`  
     display: flex;
     /* background-color: teal; */
+    padding: 30px;
     color: white;
 `;
 
@@ -17,6 +18,7 @@ const Left = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-left: 40px;
 `;
 
 const Logo = styled.h1`

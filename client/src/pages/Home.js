@@ -1,35 +1,36 @@
-
+// Components
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
 import Newsletter from '../components/Newsletter'
 import Products from '../components/Products'
 import Slider from '../components/Slider'
 
-import ProductDetails from './ProductDetails'
-import useFetch from './useFetch'
+import useFetch from './useFetch';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+// Actions
+import { getProducts as listProducts } from '../redux/actions/productActions';
 
 const Home = () => {
 
-  const { data: products, setData,  isPending, error } = useFetch('http://localhost:8000/blogs/')
+  const dispatch = useDispatch();
+  
+  const getProducts = useSelector((state) => state.getProducts);
 
-  const handleDelete = (id) => {
-    const deleteBlog = products.filter(product => product.id !== id);
-    setData(deleteBlog);
-  }
+  // const { products, loading, error } = getProducts;
+
+  useEffect(() => {
+    dispatch(listProducts());
+    
+  }, [dispatch]);
 
 
     return (
         <div>
-            {/* { error && <div>{ error } </div>} */}
-        {isPending && <div><div class="progress">
-              <div className="indeterminate"></div>
-              </div>
-            </div>
-        }
             <Slider />
             <Categories />
-        {products && <ProductDetails products={products} handleDelete={handleDelete} /> }
+            <Products />
             <Newsletter /> 
             <Footer />
         </div>

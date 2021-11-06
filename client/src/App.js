@@ -16,11 +16,16 @@ import ProductList from './pages/ProductList'
 import ProductDetails from './pages/ProductDetails'
 import Register from './pages/Register'
 
+const user = {
+  firstName: 'Taiwo',
+  lastName: 'Olapade'
+}
 function App() {
+
   return (
     <Router>
       <Announcement />
-        <Navbar />
+        <Navbar  user = {user}/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/product/:id' component={ProductDetails}/>
@@ -30,7 +35,7 @@ function App() {
           <Route path='/productlist' component={ProductList}/>
           {/* <Route path='/productdetail' component={ProductDetails}/> */}
         </Switch>
-        
+       
         {/* Sidebar */}
         {/* Backdrop */}
     </Router>    
