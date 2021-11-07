@@ -46,13 +46,13 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const CategoryItem = ({item}) => {
+const CategoryItem = ({imageUrl, name, desc, productId, price}) => {
     return (
         <Container>
-            <Image src={item.img}/>
+            <Image src={imageUrl}/>
             <Info>
-                <Title>{ item.title }</Title>
-                <Link to="/productlist">
+                <Title>{ name }</Title>
+                <Link productId={productId} name={name} imageUrl={imageUrl} desc={desc} price={price} key={productId} to="/productlist">
                   <Button>SHOP NOW</Button>
                 </Link>
             </Info>

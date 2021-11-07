@@ -9,6 +9,11 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import useFetch from './useFetch';
 
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// Actions
+import { getProducts as listProducts } from '../redux/actions/productActions';
 
 
 const Container = styled.div`
@@ -118,44 +123,47 @@ const Button = styled.button`
 `;
 
 
+
 const ProductDetails = () => {
+    
+    
+      const dispatch = useDispatch();
+      
+      const getProduct = useSelector((state) => state.getProducts);
+    
+      const { products } = getProduct;
+    
+      useEffect(() => {
+        dispatch(listProducts())
+      }, [dispatch]);
 
-    const { id } = useParams();
-  const { data: blogs, isPending, error } = useFetch('http://localhost:8000/blogs/' + id);
-  const history = useHistory();
-
-  const handleDelete = (id) => {
-    fetch('http://localhost:8000/blogs/' + blogs.id, {
-      method: 'DELETE'
-    })
-    .then(() => {
-      history.push('/')
-    })
-  }
-
+ 
     return (
+        
+        
         <Container>
+            { products.map(product => 
             <Wrapper>
                 <ImgContainer>
-                    <Image src="https://i.postimg.cc/BQJ6w2cN/156430-skinny-jeans-png-download-free.png" />
+                    <Image src={product.imageUrl} alt/>
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>Men Jean</Title>
+                    <Title>{product.name}</Title>
                     <Desc>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa beatae illum quasi perspiciatis quibusdam illo natus ducimus, tenetur veritatis! Fuga quidem similique ipsum sunt pariatur. Fugiat asperiores maiores ea perferendis!
+                        {product.description}
                     </Desc>
                     <Price>
-                        &#8358;20
+                        &#8358; {product.price}
                     </Price>
                     <FilterContainer>
                         <Filter>
-                            <FilterTitle>Color</FilterTitle>
+                            <FilterTitle>{product.color}</FilterTitle>
                             <FilterColor color="black" />
                             <FilterColor color="darkblue" />
                             <FilterColor color="gray" />
                         </Filter>
                         <Filter>
-                            <FilterTitle>Size</FilterTitle>
+                            <FilterTitle>{product.size}</FilterTitle>
                             <FilterSize>
                                 <FIlterSizeOption>XS</FIlterSizeOption>
                                 <FIlterSizeOption>S</FIlterSizeOption>
@@ -192,7 +200,7 @@ const ProductDetails = () => {
                         <Button>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
-            </Wrapper>
+            </Wrapper>)}
             <Newsletter />
             <Footer />
         </Container>

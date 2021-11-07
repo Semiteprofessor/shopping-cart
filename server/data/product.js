@@ -1,10 +1,12 @@
-const products = [
+var productsData = [
     {
         name: "MEN JEAN",
         imageUrl: "https://i.postimg.cc/B6D6RgV7/1-jeans-png-image.png",
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 3000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "WOMEN HANDBAG",
@@ -12,6 +14,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 5000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "SONY CAMERA",
@@ -19,6 +23,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 45000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN JEAN",
@@ -26,6 +32,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 3000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "PURE LEADER WOMEN HANDBAG",
@@ -33,6 +41,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 5000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "VIDEO CAMERA",
@@ -40,6 +50,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 15000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "PROFESSIONAL VIDEO COVERAGE",
@@ -47,6 +59,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 70000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN SKETCHERS",
@@ -54,6 +68,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 8000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN SKETCHERS",
@@ -61,6 +77,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 10000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "WOMEN HANDBAG",
@@ -68,6 +86,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 20000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN JEAN",
@@ -75,6 +95,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 20000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN SKETCHERS",
@@ -82,6 +104,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 20000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "VIDEO CAMERA",
@@ -89,6 +113,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 120000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN JEAN",
@@ -96,6 +122,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 5000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "WOMEN HANDBAG",
@@ -103,6 +131,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 20000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN SKETCHERS",
@@ -110,6 +140,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 10000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "WOMEN OUTDOOR SLIPPER",
@@ -117,6 +149,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 2000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "MEN JEAN",
@@ -124,6 +158,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 4000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "WOMEN HANDBAG",
@@ -131,6 +167,8 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 20000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
     {
         name: "VIDEO CAMERA",
@@ -138,7 +176,9 @@ const products = [
         description: "DON'T COMPORMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL",
         price: 65000,
         countInStock: 100,
+        color: "#FFFFFF",
+        size: 15
     },
 ];
 
-module.exports = products;
+module.exports = productsData;

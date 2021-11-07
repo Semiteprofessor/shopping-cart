@@ -1,7 +1,7 @@
 import { ArrowBackIos, ArrowForwardIos, ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import styled from "styled-components"
 import { useState } from "react"
-import { slideItems } from '../data';
+// import { slideItems } from '../data';
 import { Link } from "react-router-dom";
 // import {Button} from '@mui/material/Button';
 
@@ -88,13 +88,13 @@ const Button = styled.button`
   }
 `;
 
-const Slider = () => {
+const Slider = ({imageUrl, name, desc, productId, price}) => {
     const [slideIdex, setSlideIdex] = useState(0)
     const handleClick = (direction) => {
         if (direction === "left") {
-            setSlideIdex(slideIdex > 0 ? slideIdex-1 : 2)
+            setSlideIdex(slideIdex > 0 ? slideIdex-1 : 10)
         } else {
-            setSlideIdex(slideIdex < 2 ? slideIdex+1 : 0)
+            setSlideIdex(slideIdex < 10 ? slideIdex+1 : 0)
         }
     }
     return (
@@ -103,16 +103,15 @@ const Slider = () => {
                 <ArrowBackIos />
             </Arrow>
             <Wrapper slideIdex={slideIdex}>
-                { slideItems.map(item => (
-                    <Slide bg={ item.bg } key={item.id}>
+                    <Slide  key={productId}>
                         <ImgContainer>
-                            <Image src={ item.img } />
+                            <Image src={ imageUrl } />
                         </ImgContainer>
                         <InfoContainer>
-                            <Title>{ item.title }</Title>
-                            <Desc>{ item.desc }</Desc>
+                            <Title>{ name }</Title>
+                            <Desc>{ desc }</Desc>
 
-                            <Link to={`/product/${item.id}`}>
+                            <Link productId={productId} name={name} imageUrl={imageUrl} desc={desc} price={price} key={productId} to={`/product/${productId}`}>
                                 <Button>
                                 SHOW NOW
                             </Button>
@@ -120,13 +119,12 @@ const Slider = () => {
                             
                         </InfoContainer>
                     </Slide>
-                ))}
             </Wrapper>
             <Arrow direction="right" onClick={() => handleClick("right")}>
                 <ArrowForwardIos />
             </Arrow>
         </Container>
     )
-}
+} 
 
 export default Slider

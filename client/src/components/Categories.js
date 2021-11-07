@@ -1,4 +1,4 @@
-import { categories } from '../data';
+// import { categories } from '../data';
 import CategoryItem from './CategoryItem';
 import styled from 'styled-components';
 
@@ -11,12 +11,10 @@ const Container = styled.div`
 `;
 
 
-const Categories = () => {
+const Categories = ({imageUrl, name, desc, productId, price}) => {
     return (
         <Container>
-            { categories.map((item) => (
-                <CategoryItem item={item} key={item.id} />
-            ))}
+                <CategoryItem productId={productId} name={name} imageUrl={imageUrl} desc={desc} price={price} key={productId} />
         </Container>
     )
 }

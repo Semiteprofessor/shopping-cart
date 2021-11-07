@@ -175,7 +175,7 @@ const DeleteButton = styled.button`
     color: red;
 `;
 
-const Cart = () => {
+const Cart = ({imageUrl, name, desc, productId, price}) => {
 
   const { id } = useParams();
   const { items, isPending, error } = useFetch('http://localhost:4000/api/' + id);
