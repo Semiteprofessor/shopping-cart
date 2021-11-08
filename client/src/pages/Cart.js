@@ -180,7 +180,7 @@ const Cart = () => {
               <Summary>
                 <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                 <SummaryItem>
-                    <SummaryItemText>Subtotal Items</SummaryItemText>
+                    <SummaryItemText>Total Items</SummaryItemText>
                     <SummaryItemPrice>{getCartCount()}</SummaryItemPrice>
                 </SummaryItem>
                 <SummaryItem>
@@ -199,7 +199,7 @@ const Cart = () => {
                     <SummaryItemText>Total</SummaryItemText>
                     <SummaryItemPrice>&#8358;{getCartSubTotal()}</SummaryItemPrice>
                 </SummaryItem>
-                <Link to="/pay">
+                <Link to="/checkout">
                   <Button>CHECKOUT NOW</Button>
                 </Link>
               </Summary>

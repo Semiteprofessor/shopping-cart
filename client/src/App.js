@@ -15,6 +15,7 @@ import Login from './pages/Login'
 import ProductList from './pages/ProductList'
 import ProductDetails from './pages/ProductDetails'
 import Register from './pages/Register'
+import Checkout from './pages/Checkout'
 
 const user = {
   firstName: 'Taiwo',
@@ -33,7 +34,7 @@ function App() {
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
           <Route path='/productlist' component={ProductList}/>
-          {/* <Route path='/productdetail' component={ProductDetails}/> */}
+          <Route path='/checkout' component={Checkout}/>
         </Switch>
        
         {/* Sidebar */}
