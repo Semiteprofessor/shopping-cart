@@ -212,38 +212,16 @@ const DeleteButton = styled.button`
     color: red;
 `;
 
-const Cart = ({imageUrl, name, desc, productId, price}) => {
 
-  
-  const [ qty, setQty] = useState(1)
-    
-  const dispatch = useDispatch();
-  
-  const cart = useSelector(state => state.cart);
-  
-  const { cartItems } = cart
-  
-  const qtyChangeHandler = (id, qty) => {
-    dispatch(addToCart)
-}
-
+const CartItem = ({ item, qtyChangeHandler}) => {
 
     return (
         <Container>
-          { cartItems.length === 0 ? (
-            <div>
-            <Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert severity="error">Your Cart is empty!</Alert>
-            </Stack>
-            </div>
-          ) : (
-            cartItems.map(item =>  
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
 
-
-                  <Link to="/">
+                  <Link to="/productlist">
                       <TopButton>CONTINUE SHOPPING</TopButton>
                   </Link>
                     <TopTexts>
@@ -280,7 +258,6 @@ const Cart = ({imageUrl, name, desc, productId, price}) => {
                                     <DeleteButton ><i className="fas fa-trash"></i></DeleteButton>
                             </PriceDetail>
                         </Product>
-                        <Hr />
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -304,10 +281,9 @@ const Cart = ({imageUrl, name, desc, productId, price}) => {
                     </Summary>
                 </Bottom>
             </Wrapper>
-          ))}
-            <Footer />
+
         </Container>
     )
 }
 
-export default Cart
+export default CartItem

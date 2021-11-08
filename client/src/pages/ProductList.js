@@ -2,9 +2,19 @@ import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import Products from '../components/Products';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+
+
+import useFetch from './useFetch';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// Actions
+import { getProducts as listProducts } from '../redux/actions/productActions';
+
 
 const Container = styled.div`
-  
 `;
 
 const Title = styled.h1`
@@ -33,6 +43,19 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
+
+    
+  const dispatch = useDispatch();
+  
+  const getProduct = useSelector((state) => state.getProducts);
+
+  const { products, loading, error } = getProduct;
+
+  useEffect(() => {
+    dispatch(listProducts())
+  }, [dispatch]);
+
+
     return (
         <Container>
             <Title>Product List</Title>
@@ -70,7 +93,25 @@ const ProductList = () => {
                     </Select>
                 </Filter>
             </FilterContainer>
-            <Products />
+      
+    { loading ? <div><Box sx={{ width: '100%' }}>
+            <LinearProgress />
+            </Box></div>   : error ? <h2>{ error }</h2> : products.map((product) => (
+            
+      <Products 
+      key={product._id} 
+      productId={product._id}
+      name={product.name}
+      price={product.price}
+      desc={product.description}
+      imageUrl={product.imageUrl}
+      countInStock={product.countInStock}
+      color={product.color}
+      size={product.size}
+
+      />
+      ))}
+
             <Newsletter />
             <Footer /> 
         </Container>

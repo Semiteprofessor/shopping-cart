@@ -1,19 +1,15 @@
-import { Add, Remove } from '@material-ui/icons';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 import styled from 'styled-components';
-import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
-import CountFun from '../countButton'
-import { useHistory } from 'react-router-dom';
-import { useParams } from 'react-router-dom'
-import useFetch from './useFetch';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Actions
-import { getProducts as listProducts } from '../redux/actions/productActions';
+import { getProductDetails } from '../redux/actions/productActions';
+import { addToCart } from '../redux/actions/cartActions';
 
 
 const Container = styled.div`
@@ -67,7 +63,13 @@ const Filter = styled.div`
 
 const FilterTitle = styled.span`
     font-size: 20px;
-    font-weight: 200;
+    font-weight: 200 bold;
+`;
+
+const FilterOption = styled.div`
+    font-size: 25px;
+    font-weight: 300;
+    padding: 15px;
 `;
 
 const FilterColor = styled.div`
@@ -77,6 +79,7 @@ const FilterColor = styled.div`
     background-color: ${props=>props.color};
     margin: 0px 5px;
     cursor: pointer;
+    padding: 20px;
 `;
 
 const FilterSize = styled.select`
@@ -117,32 +120,47 @@ const Button = styled.button`
     cursor: pointer;
     font-weight: 500;
 
-    &:hover{
-        background-color: #f8f4f4;
+    
+    &:hover {
+      background-color: orange;
+      color: white;
+      font-weight: bold;
     }
 `;
 
 
 
-const ProductDetails = () => {
-    
+const ProductDetails = ({match, history}) => {
+
+    const [ qty, setQty] = useState(1)
     
       const dispatch = useDispatch();
       
-      const getProduct = useSelector((state) => state.getProducts);
-    
-      const { products } = getProduct;
-    
-      useEffect(() => {
-        dispatch(listProducts())
-      }, [dispatch]);
+      const getProduct = useSelector((state) => state.getProductDetails);
+      
+      const { product, loading, error } = getProduct;
 
- 
+      useEffect(() => {
+        if(product && match.params.id !== product._id) {
+            dispatch(getProductDetails(match.params.id))
+        }
+      }, [dispatch, product, match]);
+
+
+      const addToCartHanler = (e) => {
+          dispatch(addToCart(product._id, qty));
+          history.push("/cart");
+      }
+
     return (
         
         
         <Container>
-            { products.map(product => 
+            
+      { loading ? <div><Box sx={{ width: '100%' }}>
+                  <LinearProgress />
+                  </Box></div>   : error ? <h2>{ error }</h2> :  (
+      
             <Wrapper>
                 <ImgContainer>
                     <Image src={product.imageUrl} alt/>
@@ -156,20 +174,20 @@ const ProductDetails = () => {
                         &#8358; {product.price}
                     </Price>
                     <FilterContainer>
+                    <Filter>
+                            <FilterTitle>Status</FilterTitle>
+                                <FilterOption>{product.countInStock > 0 ? "In Stock" : "Out of Stock"}</FilterOption>
+                        </Filter>
+                    </FilterContainer>
+                    <FilterContainer>
                         <Filter>
-                            <FilterTitle>{product.color}</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            <FilterTitle>Color</FilterTitle>
+                            <FilterColor color={product.color} />
                         </Filter>
                         <Filter>
-                            <FilterTitle>{product.size}</FilterTitle>
+                            <FilterTitle>Size</FilterTitle>
                             <FilterSize>
-                                <FIlterSizeOption>XS</FIlterSizeOption>
-                                <FIlterSizeOption>S</FIlterSizeOption>
-                                <FIlterSizeOption>M</FIlterSizeOption>
-                                <FIlterSizeOption>L</FIlterSizeOption>
-                                <FIlterSizeOption>XL</FIlterSizeOption>
+                                <FIlterSizeOption>{product.size}</FIlterSizeOption>
                             </FilterSize>
                         </Filter>
                     </FilterContainer>
@@ -178,29 +196,19 @@ const ProductDetails = () => {
                             
                         <Filter>
                             <FilterTitle>Qty</FilterTitle>
-                            <FilterSize>
-                                <FIlterSizeOption>1</FIlterSizeOption>
-                                <FIlterSizeOption>2</FIlterSizeOption>
-                                <FIlterSizeOption>3</FIlterSizeOption>
-                                <FIlterSizeOption>4</FIlterSizeOption>
-                                <FIlterSizeOption>5</FIlterSizeOption>
-                                <FIlterSizeOption>6</FIlterSizeOption>
-                                <FIlterSizeOption>7</FIlterSizeOption>
-                                <FIlterSizeOption>8</FIlterSizeOption>
-                                <FIlterSizeOption>9</FIlterSizeOption>
-                                <FIlterSizeOption>10</FIlterSizeOption>
-                                <FIlterSizeOption>11</FIlterSizeOption>
-                                <FIlterSizeOption>12</FIlterSizeOption>
-                                <FIlterSizeOption>13</FIlterSizeOption>
-                                <FIlterSizeOption>14</FIlterSizeOption>
-                                <FIlterSizeOption>15</FIlterSizeOption>
+                            <FilterSize value={qty} onChange={(e) => setQty(e.target.value)}>
+                                {[...Array(product.countInStock).keys()].map(x => (
+                                <FIlterSizeOption value={x+1} key={x+1}>{x+1}</FIlterSizeOption>
+                                ))}
                             </FilterSize>
                         </Filter>
                         </AmountContainer>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={addToCartHanler}>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
-            </Wrapper>)}
+            </Wrapper>
+            )}
+
             <Newsletter />
             <Footer />
         </Container>
