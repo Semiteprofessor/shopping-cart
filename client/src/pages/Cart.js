@@ -6,25 +6,28 @@ import { Add, Remove } from '@material-ui/icons';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-// Actions
-import { addToCart } from '../redux/actions/cartActions';
+import CartItem from './CartItem'
 
+// Actions
+import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 
 const Container = styled.div`
   
 `;
 
-const Wrapper = styled.div`
-  padding: 20px;
+const TopBar = styled.div`
+  display: flex;
+  padding: 30px;
+  background-color: pink;
 `;
 
 const Title = styled.h1`
-  font-weight: 300;
   text-align: center;
+  font-weight: bold;
 `;
 
 const Top = styled.div`
@@ -38,11 +41,8 @@ const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  border: ${(props)=> props.type === "filled" && "none"};
-  background-color: ${(props)=> 
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props)=> props.type === "filled" && "white"};
-
+  color: white;
+  background-color: black;
   &:hover {
       background-color: purple;
       color: white;
@@ -51,125 +51,69 @@ const TopButton = styled.button`
 `;
 
 const TopTexts = styled.div`
-  
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const TopText = styled.div`
   text-decoration: underline;
   cursor: pointer;
   margin: 0px 10px;
+  font-weight: bold;
 `;
 
-const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Left = styled.div`
+    flex: 1;
+    display: flex;
+    margin-top: 60px;
+    margin-left: 20px;
 `;
 
-const Info = styled.div`
-  flex: 3;
-`;
-
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ProductDetails = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 200px;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span`
-  flex: 3;
-`;
-
-const ProductId = styled.span`
-  flex: 3;
-`;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin-bottom: 10px;
-`;
-
-const ProductSize = styled.span`
-  flex: 3;
-`;
-
-const DeleteProduct = styled.span`
-  flex: 3;
-`;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-`;
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-`;
-
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
+const Center = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 500px;
 `;
 
 const Summary = styled.div`
   flex: 1;
-  border: 0.5px solid lightgray;
+  border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
   height: 50vh;
 `;
 
 const SummaryTitle = styled.h1`
-  font-weight: 200;
+  font-weight: bold;
 `;
 
 const SummaryItem = styled.div`
-  margin: 30px 0px;
+  margin: 20px 0px;
   display: flex;
   justify-content: space-between;
   font-weight: ${props=> props.type === "total" && "500"};
   font-weight: ${props=> props.type === "total" && "500"};
 `;
 
+const Right = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+`;
+
 const SummaryItemText = styled.span`
   flex: 1;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 60px;
 `;
 
 const SummaryItemPrice = styled.span`
   flex: 1;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const Button = styled.button`
@@ -187,49 +131,81 @@ const Button = styled.button`
   }
 `;
 
-const Filter = styled.div`
-    display: flex;
-    align-items: center;
-`;
 
-const FilterTitle = styled.span`
-    font-size: 20px;
-    font-weight: 200 bold;
-`;
-
-const FilterSize = styled.select`
-    margin-left: 10px;
-    padding: 5px;
-`;
-
-const FIlterSizeOption = styled.option``;
-
-
-const DeleteButton = styled.button`
-    padding: 10px;
-    background-color: transparent;
-    cursor: pointer;
-    color: red;
-`;
-
-const Cart = ({imageUrl, name, desc, productId, price}) => {
-
-  
-  const [ qty, setQty] = useState(1)
-    
+const Cart = () => {
   const dispatch = useDispatch();
-  
-  const cart = useSelector(state => state.cart);
-  
-  const { cartItems } = cart
-  
-  const qtyChangeHandler = (id, qty) => {
-    dispatch(addToCart)
-}
 
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+ 
+  useEffect(() => {}, []);
+
+  const qtyChangeHandler = (id, qty, product) => {
+    dispatch(addToCart(id, qty, product));
+  };
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
+  const getCartCount = () => {
+    return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0);
+  };
+
+  const getCartSubTotal = () => {
+    return cartItems
+      .reduce((price, item) => price + item.price * item.qty, 0)
+      .toFixed(2);
+  };
 
     return (
         <Container>
+          <TopBar>
+            
+            <Left>
+              <Link to="/productlist">
+                <TopButton>CONTINUE SHOPPING</TopButton>
+              </Link>
+            </Left>
+            <Center>
+            <Title>YOUR ORDER(S)</Title>
+                <Top>
+                    <TopTexts>
+                        <TopText>Shopping Bag (2)</TopText>
+                        <TopText>Your Wishlist (0)</TopText>
+                    </TopTexts>
+                </Top>
+            </Center>
+            <Right>
+              <Summary>
+                <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                <SummaryItem>
+                    <SummaryItemText>Subtotal Items</SummaryItemText>
+                    <SummaryItemPrice>{getCartCount()}</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                    <SummaryItemText>Subtotal</SummaryItemText>
+                    <SummaryItemPrice>&#8358;{getCartSubTotal()}</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                    <SummaryItemText>Estimated Shipping</SummaryItemText>
+                    <SummaryItemPrice>&#8358;50</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                    <SummaryItemText>Shipping Discount</SummaryItemText>
+                    <SummaryItemPrice>-&#8358;50</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem type="total">
+                    <SummaryItemText>Total</SummaryItemText>
+                    <SummaryItemPrice>&#8358;{getCartSubTotal()}</SummaryItemPrice>
+                </SummaryItem>
+                <Link to="/pay">
+                  <Button>CHECKOUT NOW</Button>
+                </Link>
+              </Summary>
+            </Right>
+          </TopBar>
+
           { cartItems.length === 0 ? (
             <div>
             <Stack sx={{ width: '100%' }} spacing={2}>
@@ -237,74 +213,27 @@ const Cart = ({imageUrl, name, desc, productId, price}) => {
             </Stack>
             </div>
           ) : (
-            cartItems.map(item =>  
-            <Wrapper>
-                <Title>YOUR BAG</Title>
-                <Top>
-
-
-                  <Link to="/">
-                      <TopButton>CONTINUE SHOPPING</TopButton>
-                  </Link>
-                    <TopTexts>
-                        <TopText>Shopping Bag (2)</TopText>
-                        <TopText>Your Wishlist (0)</TopText>
-                    </TopTexts>
-                    
-                  <Link to="/pay">
-                    <TopButton type="filled">CHECKOUT NOW</TopButton>
-                  </Link>
-                </Top>
-                <Bottom>
-                    <Info>
-                        <Product>
-                            <ProductDetails>
-                                <Image src={item.imageUrl} />
-                                <Details>
-                                    <ProductName><b>Product:</b>TAIWO OLAPADE CAMERA</ProductName>
-                                    <ProductId><b>ID:</b>56219570075</ProductId>
-                                    <ProductColor color={item.color} />
-                                    <ProductSize><b>Size:</b>{item.size}</ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetail>
-                                <Filter>
-                                  <FilterTitle>Qty</FilterTitle>
-                                      <FilterSize value={item.qty} onChange={(e) => qtyChangeHandler(item.product, e.target.value)}>
-                                          {[...Array(item.countInStock).keys()].map(x => (
-                                          <FIlterSizeOption value={x+1} key={x+1}>{x+1}</FIlterSizeOption>
-                                          ))}
-                                      </FilterSize>
-                                  </Filter>
-                                 <ProductPrice>&#8358;{item.price}</ProductPrice>
-                                    <DeleteButton ><i className="fas fa-trash"></i></DeleteButton>
-                            </PriceDetail>
-                        </Product>
-                        <Hr />
-                    </Info>
-                    <Summary>
-                        <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                        <SummaryItem>
-                            <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>&#8358;500</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Estimated Shipping</SummaryItemText>
-                            <SummaryItemPrice>&#8358;50</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>-&#8358;50</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem type="total">
-                            <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>&#8358;500</SummaryItemPrice>
-                        </SummaryItem>
-                        <Button>CHECKOUT NOW</Button>
-                    </Summary>
-                </Bottom>
-            </Wrapper>
-          ))}
+            cartItems.map((item) => (
+              <CartItem
+                key={item.product}
+                item={item}
+                // itemId={item.id}
+                // name={item.name}
+                // price={item.price}
+                // desc={item.description}
+                // imageUrl={item.imageUrl}
+                // countInStock={item.countInStock}
+                // color={item.color}
+                // size={item.size}
+                // qty={item.qty}
+                // product={item.product}
+                
+                qtyChangeHandler={qtyChangeHandler}
+                removeHandler={removeFromCartHandler}
+              />
+            ))
+          )}
+            
             <Footer />
         </Container>
     )

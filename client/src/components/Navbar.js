@@ -19,6 +19,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
+import { useSelector } from 'react-redux'
 
 const Container  = styled.div`
   height: 70px;
@@ -103,6 +104,13 @@ const Navbar = ({user}) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  const getCartCount = () => {
+    return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0);
+  };
+
     
     return (
         <Container>
@@ -127,7 +135,7 @@ const Navbar = ({user}) => {
                     <Link to="/cart" style={linkStyle}>
                         <MenuItems>
                             Cart
-                        <Badge badgeContent={4} color="primary">
+                        <Badge badgeContent={getCartCount()} color="primary">
                             <ShoppingCartOutlined />
                         </Badge></MenuItems>
                     </Link>

@@ -113,7 +113,7 @@ const Slider = ({imageUrl, name, desc, productId, price}) => {
 
                             <Link productId={productId} name={name} imageUrl={imageUrl} desc={desc} price={price} key={productId} to={`/product/${productId}`}>
                                 <Button>
-                                SHOW NOW
+                                SHOW NOW 
                             </Button>
                             </Link>
                             

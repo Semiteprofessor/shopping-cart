@@ -63,7 +63,7 @@ const Filter = styled.div`
 
 const FilterTitle = styled.span`
     font-size: 20px;
-    font-weight: 200 bold;
+    font-weight: bold;
 `;
 
 const FilterOption = styled.div`
